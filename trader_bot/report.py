@@ -1,5 +1,4 @@
 import pandas as pd
-from typing import List
 from trader_bot.db import get_connection
 
 
@@ -31,15 +30,9 @@ def pair_trades(rows):
     """
     配對買賣，計算報酬率
     """
-    column_names: List[str] = [
-        "symbol",
-        "date",
-        "action",
-        "price",
-        "quantity",
-        "strategy",
-    ]
-    df = pd.DataFrame(rows, columns=column_names)  # type: ignore
+    df = pd.DataFrame(
+        rows, columns=["symbol", "date", "action", "price", "quantity", "strategy"]
+    )
 
     results = []
     grouped = df.groupby("symbol")

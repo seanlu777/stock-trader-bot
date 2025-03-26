@@ -1,3 +1,16 @@
+-- 建立使用者
+DO
+$$
+BEGIN
+    IF NOT EXISTS (SELECT FROM pg_catalog.pg_roles WHERE rolname = 'trading_user') THEN
+        CREATE ROLE trading_user WITH LOGIN PASSWORD 'trading_pass';
+        ALTER ROLE trading_user CREATEDB;
+    END IF;
+END
+$$;
+
+-- 建立資料庫
+-- 注意：資料庫要在外部 docker-compose 設定建立，這裡只建立schema結構
 -- 1. 股價歷史資料
 CREATE TABLE IF NOT EXISTS price_history (
     id SERIAL PRIMARY KEY,
